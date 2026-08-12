@@ -1,8 +1,11 @@
 import json
 import re
+from pathlib import Path
 
-input_file = "DeepEmpathy_dataset.jsonl"
-cleaned_file = "EDeepEmpathy_dataset_cleaned.jsonl"
+project_root = Path(__file__).resolve().parent.parent
+processed_data_dir = project_root / "data" / "processed"
+input_file = processed_data_dir / "DeepEmpathy_dataset.jsonl"
+cleaned_file = processed_data_dir / "EDeepEmpathy_dataset_cleaned.jsonl"
 
 good_lines = 0
 bad_lines = 0

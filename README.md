@@ -65,9 +65,9 @@ EmpathQwen/
 │   └── processed/          # Сгенерированные CoT-датасеты (.jsonl)
 ├── scripts/                # 🛠️ Оффлайн пайплайны
 │   ├── cleaner.py          # Очистка и фильтрация
-│   ├── empathy_data_gen.py # Генерация CoT-ответов учителем
+│   ├── empathy_data_generator.py # Генерация CoT-ответов учителем
 │   └── train.py            # Код для тренировки модели в облаке
-└── weights/                # 🎛️ Локальные веса LoRA-адаптеров (заигнорены в Git)
+└── my_psychologist_final/ # 🎛️ LoRA-адаптер и токенайзер
 
 ```
 
@@ -89,7 +89,7 @@ python -m venv venv
 Для Windows: venv\Scripts\activate
 pip install -r requirements.txt
 
-3. Поместите ваши веса LoRA (файлы adapter_model.safetensors и adapter_config.json) в папку weights/.
+3. Поместите ваши веса LoRA (файлы adapter_model.safetensors и adapter_config.json) в папку my_psychologist_final/.
 
 4. Запустите интерактивный тест долгого диалога прямо в терминале:
 python app/main.py

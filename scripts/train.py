@@ -1,6 +1,7 @@
 import os
 import torch
 import gc
+from pathlib import Path
 from datasets import load_dataset
 from transformers import (
     AutoModelForCausalLM,
@@ -60,8 +61,9 @@ model = get_peft_model(model, lora_config)
 # ============================================
 # 4. ПОДГОТОВКА И ТОКЕНИЗАЦИЯ ТВОИХ ДАННЫХ
 # ============================================
-# 🛑 Укажи имя своего итогового файла (например, final_empathy_dataset.jsonl)
-dataset = load_dataset("json", data_files="/kaggle/input/datasets/va4heo/empath/final_dataset.jsonl", split="train")
+project_root = Path(__file__).resolve().parent.parent
+dataset_path = project_root / "data" / "processed" / "final_dataset.jsonl"
+dataset = load_dataset("json", data_files=str(dataset_path), split="train")
 
 # Шаг 1: Форматируем твой JSONL в единую текстовую строку
 def format_func(x):
@@ -84,7 +86,7 @@ data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False)
 # 5. ПАРАМЕТРЫ ОБУЧЕНИЯ
 # ============================================
 training_args = TrainingArguments(
-    output_dir="./final_psychologist_model",
+    output_dir=str(project_root / "final_psychologist_model"),
     per_device_train_batch_size=2,          # Оставляем 2 для 16GB VRAM
     gradient_accumulation_steps=4,        # Эмулируем батч = 8
     max_steps=500,                        # Можно увеличить, если данных стало больше (например, 1000)
@@ -114,6 +116,7 @@ trainer.train()
 # ============================================
 # 7. СОХРАНЕНИЕ
 # ============================================
-trainer.model.save_pretrained("./my_psychologist_final")
-tokenizer.save_pretrained("./my_psychologist_final")
-print("✅ ПОБЕДА! Модель обучена на твоем датасете, адаптеры сохранены в './my_psychologist_final'")
+adapter_output_dir = project_root / "my_psychologist_final"
+trainer.model.save_pretrained(adapter_output_dir)
+tokenizer.save_pretrained(adapter_output_dir)
+print(f"✅ ПОБЕДА! Модель обучена, адаптеры сохранены в '{adapter_output_dir}'")

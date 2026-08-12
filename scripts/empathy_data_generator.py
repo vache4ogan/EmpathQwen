@@ -3,6 +3,7 @@ import json
 import time
 import urllib.request
 import tarfile
+from pathlib import Path
 import pandas as pd # 🛑 Используем pandas вместо datasets
 from dotenv import load_dotenv
 from groq import Groq
@@ -20,20 +21,25 @@ client = Groq(api_key=api_key)
 # 2. ХАКЕРСКИЙ ПУТЬ: Скачиваем сырые данные напрямую с серверов Facebook
 print("📥 Обходим Hugging Face и качаем оригинальный датасет...")
 url = "https://dl.fbaipublicfiles.com/parlai/empatheticdialogues/empatheticdialogues.tar.gz"
-tar_path = "empatheticdialogues.tar.gz"
-extract_dir = "empatheticdialogues"
+project_root = Path(__file__).resolve().parent.parent
+raw_data_dir = project_root / "data" / "raw"
+processed_data_dir = project_root / "data" / "processed"
+tar_path = raw_data_dir / "empatheticdialogues.tar.gz"
+extract_dir = raw_data_dir / "empatheticdialogues"
+raw_data_dir.mkdir(parents=True, exist_ok=True)
+processed_data_dir.mkdir(parents=True, exist_ok=True)
 
 # Скачиваем и распаковываем, если еще не делали этого
-if not os.path.exists(f"{extract_dir}/train.csv"):
+if not (extract_dir / "train.csv").exists():
     print("⏳ Загрузка архива (около 28 МБ)...")
     urllib.request.urlretrieve(url, tar_path)
     print("📦 Распаковка архива...")
     with tarfile.open(tar_path, "r:gz") as tar:
-        tar.extractall()
+        tar.extractall(path=raw_data_dir)
 
 # Читаем CSV-файл напрямую
 print("📊 Обработка данных через pandas...")
-df = pd.read_csv(f"{extract_dir}/train.csv", on_bad_lines='skip')
+df = pd.read_csv(extract_dir / "train.csv", on_bad_lines='skip')
 
 # ФИЛЬТРАЦИЯ: Убираем пустые строки и слишком короткие огрызки текста
 valid_prompts = [str(p) for p in df['prompt'].dropna() if len(str(p).split()) > 10]
@@ -74,7 +80,7 @@ OUTPUT STRICTLY IN THIS JSON FORMAT:
 }
 """
 
-output_file = "DeepEmpathy_dataset.jsonl"
+output_file = processed_data_dir / "DeepEmpathy_dataset.jsonl"
 
 # 4. УМНЫЙ СТАРТ: Запоминаем, что уже сгенерировали
 seen_instructions = set()

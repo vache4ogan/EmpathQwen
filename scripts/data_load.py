@@ -1,6 +1,7 @@
 import os
 import json
 import time
+from pathlib import Path
 from dotenv import load_dotenv
 from datasets import load_dataset
 from groq import Groq
@@ -54,7 +55,9 @@ SYSTEM_PROMPT = """Ты — гениальный ИИ-психотерапевт
 }
 """
 
-output_file = "EmpathLLaMa_dataset.jsonl"
+project_root = Path(__file__).resolve().parent.parent
+output_file = project_root / "data" / "processed" / "EmpathLLaMa_dataset.jsonl"
+output_file.parent.mkdir(parents=True, exist_ok=True)
 print(f"🚀 Начинаем генерацию! Данные будут сохранены в {output_file}")
 
 seen_instructions = set()
@@ -126,6 +129,5 @@ with open(output_file, "a", encoding="utf-8") as f:
 
 
 print("\n✅ Готово! Открой файл", output_file, "и оцени результат.")
-
 
 
