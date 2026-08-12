@@ -1,12 +1,16 @@
 from threading import Lock
+from typing import Protocol
 
 from app.guardrails import CRISIS_MESSAGE, check_safety
 from app.memory import ConversationMemory
-from app.model_runner import ModelRunner
+
+
+class ModelRunnerProtocol(Protocol):
+    def generate_response(self, full_prompt: str) -> str: ...
 
 
 class ChatService:
-    def __init__(self, model: ModelRunner):
+    def __init__(self, model: ModelRunnerProtocol):
         self.model = model
         self.sessions: dict[str, ConversationMemory] = {}
         self.generation_lock = Lock()

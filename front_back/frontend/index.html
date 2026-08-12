@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f7f4">
+  <title>Эмпатия — пространство для разговора</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <a class="brand" href="#" aria-label="Эмпатия">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path d="M16 26.2c-1.1-4.7-4.9-6.4-8-9.2C2.8 12.2 5.7 5.7 11.1 6.1c2 .1 3.8 1.3 4.9 3 1.1-1.7 2.9-2.9 4.9-3 5.4-.4 8.3 6.1 3.1 10.9-3.1 2.8-6.9 4.5-8 9.2Z" fill="currentColor"/>
+              <path d="M11.2 16.2c1.6-1.2 3.2-1.2 4.8 0 1.6 1.2 3.2 1.2 4.8 0" stroke="white" stroke-width="1.7" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <span>Эмпатия</span>
+        </a>
+        <button class="icon-button sidebar-close" id="closeSidebar" aria-label="Закрыть меню">
+          <svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+
+      <button class="new-chat-button" id="newChatButton">
+        <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        <span>Новый разговор</span>
+        <kbd>⌘ K</kbd>
+      </button>
+
+      <div class="history-label">Недавние</div>
+      <nav class="chat-history" id="chatHistory" aria-label="История разговоров"></nav>
+
+      <div class="sidebar-footer">
+        <div class="privacy-note">
+          <span class="status-dot"></span>
+          <div>
+            <strong>Приватный режим</strong>
+            <small>История хранится в браузере</small>
+          </div>
+        </div>
+        <button class="settings-button" id="clearHistoryButton" title="Удалить историю">
+          <svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M7 7l1 13h8l1-13M10 11v5M14 11v5"/></svg>
+          Очистить историю
+        </button>
+      </div>
+    </aside>
+
+    <main class="main-panel">
+      <header class="topbar">
+        <button class="icon-button menu-button" id="openSidebar" aria-label="Открыть меню">
+          <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+        <button class="model-pill" type="button">
+          <span class="mini-mark">э</span>
+          <span>Эмпатия</span>
+          <span class="beta">demo</span>
+        </button>
+        <div class="topbar-actions">
+          <span class="online"><i></i> онлайн</span>
+          <button class="icon-button" id="themeButton" aria-label="Сменить тему">
+            <svg class="sun-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <section class="conversation" id="conversation" aria-live="polite">
+        <div class="welcome" id="welcomeScreen">
+          <div class="welcome-orbit">
+            <div class="welcome-logo">
+              <svg viewBox="0 0 42 42" fill="none">
+                <path d="M21 35c-1.5-6.3-6.5-8.6-10.7-12.3C3.4 16.3 7.2 7.6 14.5 8.2c2.7.2 5 1.7 6.5 4 1.5-2.3 3.8-3.8 6.5-4 7.3-.6 11.1 8.1 4.2 14.5C27.5 26.4 22.5 28.7 21 35Z" fill="currentColor"/>
+                <path d="M14.6 21.7c2.1-1.7 4.3-1.7 6.4 0 2.1 1.7 4.3 1.7 6.4 0" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+          </div>
+          <p class="eyebrow">Пространство без оценок</p>
+          <h1>Что у тебя сейчас<br><em>на душе?</em></h1>
+          <p class="welcome-copy">Расскажи так, как получается. Здесь можно остановиться,<br class="desktop-only"> выдохнуть и спокойно разобраться в своих чувствах.</p>
+
+          <div class="suggestion-grid">
+            <button class="suggestion" data-prompt="Мне тревожно, и я не могу понять почему">
+              <span class="suggestion-icon lavender">⌁</span>
+              <span><strong>Разобраться в тревоге</strong><small>Когда мысли не дают покоя</small></span>
+              <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+            <button class="suggestion" data-prompt="Я устал и чувствую, что у меня совсем нет сил">
+              <span class="suggestion-icon peach">☼</span>
+              <span><strong>Поговорить об усталости</strong><small>Когда силы на исходе</small></span>
+              <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+            <button class="suggestion" data-prompt="Мне трудно принять важное решение">
+              <span class="suggestion-icon mint">◇</span>
+              <span><strong>Принять решение</strong><small>Услышать, чего хочешь именно ты</small></span>
+              <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+            <button class="suggestion" data-prompt="Мне одиноко и хочется с кем-нибудь поговорить">
+              <span class="suggestion-icon blue">◌</span>
+              <span><strong>Просто поговорить</strong><small>Если хочется быть услышанным</small></span>
+              <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="messages" id="messages"></div>
+      </section>
+
+      <footer class="composer-area">
+        <form class="composer" id="chatForm">
+          <textarea id="messageInput" rows="1" maxlength="5000" placeholder="Напиши, что сейчас чувствуешь…" aria-label="Сообщение"></textarea>
+          <div class="composer-bottom">
+            <span class="composer-hint">Enter — отправить · Shift + Enter — новая строка</span>
+            <button class="send-button" id="sendButton" type="submit" disabled aria-label="Отправить">
+              <svg viewBox="0 0 24 24"><path d="M12 19V5M6.5 10.5 12 5l5.5 5.5"/></svg>
+            </button>
+          </div>
+        </form>
+        <p class="disclaimer">Эмпатия — это ИИ-собеседник, а не врач. В экстренной ситуации обратись за профессиональной помощью.</p>
+      </footer>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="/app.js" defer></script>
+</body>
+</html>

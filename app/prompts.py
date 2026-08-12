@@ -7,3 +7,7 @@ SYSTEM_INSTRUCTION = (
 )
 
 START_PROMPT_TEMPLATE = SYSTEM_INSTRUCTION + "Ситуация: {situation}\nРассуждение:"
+CONTINUE_PROMPT_TEMPLATE = (
+    "\nПользователь: {user_message}\n"
+    "Рассуждение:"
+)

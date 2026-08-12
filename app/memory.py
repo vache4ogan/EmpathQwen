@@ -1,4 +1,4 @@
-from prompts import START_PROMPT_TEMPLATE, CONTINUE_PROMPT_TEMPLATE
+from app.prompts import START_PROMPT_TEMPLATE, CONTINUE_PROMPT_TEMPLATE
 
 class ConversationMemory:
     def __init__(self):
